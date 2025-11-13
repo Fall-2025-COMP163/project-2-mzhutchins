@@ -5,6 +5,7 @@ Date: 11-9-25
 
 AI Usage: Define 'super().__init__()' constructor. Provided creative damage calculations.
 """
+import math
 import random
 
 
@@ -308,6 +309,35 @@ class Rogue(Player):
         # TODO: Implement sneak attack
         # Should always do critical damage
         pass
+
+
+class Tank(Player):
+
+
+    def __init__(self, name):
+        super().__init__(name, 'Tank', 210, 8, 10)
+        self.character_class = 'Tank'
+
+
+    def attack(self, target):
+        damage = self.magic * 0.5 + self.strength * 2
+        x = random.randint(1,5)
+        if self.health <= (self.health * 0.25):
+            if x == 3:
+                self.health = self.health + 15
+        target.take_damage(damage)
+        return target.health
+
+
+    def shield(self, target):
+        damage = self.magic + self.strength
+        x = random.randint(1,10)
+        if x >7:
+            self.health = self.health + math.fabs(self.health - target.health)
+        target.take_damage(damage)
+        return target.health
+
+
 
 class Weapon:
     """
